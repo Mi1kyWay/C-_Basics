@@ -1,57 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace TrainingClasses3
 {
     internal class Program
-    {
-        class Employee
-        {
-            string name;
-            int age;
-            string position;
-            public int salary;
-
-            public Employee(string name, int age, string position, int salary)
-            {
-                this.name = name;
-                this.age = age;
-                this.position = position;
-                this.salary = salary;
-            }
-
-            public string EmployeeInfo()
-            {
-                string infoName = Convert.ToString(name);
-                string infoAge = Convert.ToString(age);
-                string infoSalary = Convert.ToString(salary);
-                string infoPosition = Convert.ToString(position);
-
-                string info = $"Имя сотрудника: {infoName} \nВозраст сотрудника: {infoAge} \nПозиция сотрудника: {infoPosition} \nЗарплата сотрудника: {infoSalary}";
-                return info;
-            }
-        }
+    {     
         static void Main(string[] args)
         {
-            List<Employee> list = new List<Employee>();
-            string userInput = " ";
-            while (userInput != "4")
+            var list = new List<Employee>();
+            MenuEnum menuOption = MenuEnum.None;
+            var sumSalary = 0;
+            while (menuOption != MenuEnum.CloseApp)
             {
                 Console.Clear();
                 Console.WriteLine("1. Добавить нового сотрудника");
                 Console.WriteLine("2. Вывести информацию о всех сотрудниках");
                 Console.WriteLine("3. Вычислить общую сумму зарплат");
                 Console.WriteLine("4. Выход");
-                Console.WriteLine("\nВыберите опцию");
+                Console.WriteLine($"{Environment.NewLine}Выберите опцию");
 
-                userInput = Convert.ToString(Console.ReadLine());
-                int sumSalary = 0;
-                switch (userInput)
+                /// <summary>
+                /// Читаем строку -> переводим в инт -> приводим к типу MenuEnum -> присваиваем в MenuOption
+                /// </summary>
+                menuOption = (MenuEnum)Convert.ToInt32(Console.ReadLine());
+                switch (menuOption)
                 {
-                    case "1":
+                    case MenuEnum.AddEmployee:
                         Console.Clear();
                         Console.WriteLine("Введите данные нового сотрудника.");
                         Console.Write("Имя: ");
@@ -67,19 +42,19 @@ namespace TrainingClasses3
                         Console.Clear();
                         break;
 
-                    case "2":
+                    case MenuEnum.ShowEmployee:
                         Console.Clear();
                         foreach (var addedEmployee in list)
-                            Console.WriteLine(addedEmployee.EmployeeInfo());
+                            Console.WriteLine(addedEmployee.ToString());
                         Console.ReadKey();
                         break;
-                    case "3":
+                    case MenuEnum.ShowSumSalary:
                         foreach (var addedEmployee in list)
-                            sumSalary += addedEmployee.salary;
+                            sumSalary += addedEmployee._salary;
                         Console.WriteLine("Сумма зарплат всех сотрудников: {0}", sumSalary);
                         Console.ReadKey();
                         break;
-                    case "4":
+                    case MenuEnum.CloseApp:
                     return;
                     default:
                         Console.Clear();
